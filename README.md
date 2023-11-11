@@ -1,4 +1,4 @@
-# playwright-zombieplus
+# Playwright Zombie+
 
 Inside that directory, you can run several commands:
 
