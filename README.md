@@ -1,5 +1,10 @@
 # Playwright Zombie+
 
+## How I create automatic database?
+
+  Run `chmod +x db.sh` 
+  Then run `./db.sh`
+
 Inside that directory, you can run several commands:
 
   ## Runs the end-to-end tests.
