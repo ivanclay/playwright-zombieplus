@@ -27,6 +27,10 @@ Inside that directory, you can run several commands:
   
     npx playwright test --debug
 
+  ## Runs the tests opening browser.
+  
+    npx playwright test --headed
+
   ## Auto generate tests with Codegen.
   
     npx playwright codegen
