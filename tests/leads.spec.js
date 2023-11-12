@@ -1,6 +1,81 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
+test('não deve cadastrar com os campos vazios', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+
+  await page.getByRole('button', { name: /Aperte o play/}).click();
+
+  //checkpoint
+  await expect(
+      page.getByTestId('modal').getByRole('heading')
+    ).toHaveText('Fila de espera');
+  
+  await page.getByTestId('modal')
+      .getByText('Quero entrar na fila').click();
+
+  await expect(page.locator('.alert')).toHaveText([
+    'Campo obrigatório',
+    'Campo obrigatório'
+  ]);
+});
+
+test('não deve cadastrar com nome vazio', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+
+  await page.getByRole('button', { name: /Aperte o play/}).click();
+
+  //checkpoint
+  await expect(
+      page.getByTestId('modal').getByRole('heading')
+    ).toHaveText('Fila de espera');
+  
+  await page.getByPlaceholder('Seu email principal').fill('ivanclay@mail.com');
+
+  await page.getByTestId('modal')
+      .getByText('Quero entrar na fila').click();
+
+  await expect(page.locator('.alert')).toHaveText('Campo obrigatório');
+});
+
+test('não deve cadastrar com email vazio', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+
+  await page.getByRole('button', { name: /Aperte o play/}).click();
+
+  //checkpoint
+  await expect(
+      page.getByTestId('modal').getByRole('heading')
+    ).toHaveText('Fila de espera');
+  
+  await page.getByPlaceholder('Seu nome completo').fill('ivan clay');
+
+  await page.getByTestId('modal')
+      .getByText('Quero entrar na fila').click();
+
+      await expect(page.locator('.alert')).toHaveText('Campo obrigatório');
+});
+
+test('não deve cadastrar com e-mail incorreto', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+
+  await page.getByRole('button', { name: /Aperte o play/}).click();
+
+  //checkpoint
+  await expect(
+      page.getByTestId('modal').getByRole('heading')
+    ).toHaveText('Fila de espera');
+  
+  await page.getByPlaceholder('Seu nome completo').fill('ivan clay');
+
+  await page.getByPlaceholder('Seu email principal').fill('ivanclay.mail.com');
+
+  await page.getByTestId('modal')
+      .getByText('Quero entrar na fila').click();
+
+  await expect(page.locator('.alert')).toHaveText('Email incorreto');
+});
+
 test('deve cadastrar um lead na fila de espera', async ({ page }) => {
   await page.goto('http://localhost:3000');
 
@@ -45,8 +120,14 @@ test('deve cadastrar um lead na fila de espera', async ({ page }) => {
     await page.getByTestId('modal')
       .getByText('Quero entrar na fila').click();
 
-  await page.waitForTimeout(10000);
-  
+    //---->
+    //Aproach to get toast html
+    // await page.getByText('seus dados conosco').click();
+    // const content = await page.content();
+    // console.log(content);
+
+    const toastMessage = 'Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato!';
+    await expect(page.locator('.toast')).toHaveText(toastMessage);
+    await expect(page.locator('.toast')).toBeHidden({timeout: 5000});
+
 });
-
-
