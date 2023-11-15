@@ -26,8 +26,13 @@ export class LandingPage {
     }
 
     async toastHaveText(toastMessage){
+        const toast = this.page.locator('.toast'); 
         
-        await expect(this.page.locator('.toast')).toHaveText(toastMessage);
-        await expect(this.page.locator('.toast')).toBeHidden({timeout: 5000});
+        await expect(toast).toHaveText(toastMessage);
+        await expect(toast).toBeHidden({timeout: 5000});
+    }
+
+    async alertHaveText(target){
+        await expect(this.page.locator('.alert')).toHaveText(target);
     }
 }

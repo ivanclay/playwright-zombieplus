@@ -22,7 +22,7 @@ test('não deve cadastrar com os campos vazios', async ({ page }) => {
   await landingPage.openLeadModal();
   await landingPage.submitLeadForm('', '');
 
-  await expect(page.locator('.alert')).toHaveText([
+  await landingPage.alertHaveText([
     'Campo obrigatório',
     'Campo obrigatório'
   ]);
@@ -35,7 +35,7 @@ test('não deve cadastrar com nome vazio', async ({ page }) => {
   await landingPage.openLeadModal();
   await landingPage.submitLeadForm('', 'meu-email@gmail.com');
 
-  await expect(page.locator('.alert')).toHaveText('Campo obrigatório');
+  await landingPage.alertHaveText('Campo obrigatório');
 });
 
 test('não deve cadastrar com email vazio', async ({ page }) => {
@@ -45,7 +45,7 @@ test('não deve cadastrar com email vazio', async ({ page }) => {
   await landingPage.openLeadModal();
   await landingPage.submitLeadForm(`meu nome`, '');
 
-      await expect(page.locator('.alert')).toHaveText('Campo obrigatório');
+      await landingPage.alertHaveText('Campo obrigatório');
 });
 
 test('não deve cadastrar com e-mail incorreto', async ({ page }) => {
@@ -55,7 +55,7 @@ test('não deve cadastrar com e-mail incorreto', async ({ page }) => {
   await landingPage.openLeadModal();
   await landingPage.submitLeadForm(`meu nome`, 'meu-email.gmail.com');
 
-  await expect(page.locator('.alert')).toHaveText('Email incorreto');
+  await landingPage.alertHaveText(`Email incorreto`);
 });
 
 // test('deve cadastrar um lead na fila de espera', async ({ page }) => {
