@@ -2,10 +2,13 @@
 import { LandingPage } from './pages/landingPage';
 const { test, expect } = require('@playwright/test');
 
-test('deve cadastrar um lead na fila de espera', async ({ page }) => {
-  
-  const landingPage = new LandingPage(page);
+let landingPage;
 
+test.beforeEach( async ({ page }) => {
+   landingPage = new LandingPage(page);
+});
+
+test('deve cadastrar um lead na fila de espera', async ({ page }) => {
   await landingPage.visit();
   await landingPage.openLeadModal();
   await landingPage.submitLeadForm(`meu nome`, 'meu-email@gmail.com');
@@ -16,8 +19,6 @@ test('deve cadastrar um lead na fila de espera', async ({ page }) => {
 });
 
 test('não deve cadastrar com os campos vazios', async ({ page }) => {
-  const landingPage = new LandingPage(page);
-
   await landingPage.visit();
   await landingPage.openLeadModal();
   await landingPage.submitLeadForm('', '');
@@ -29,8 +30,6 @@ test('não deve cadastrar com os campos vazios', async ({ page }) => {
 });
 
 test('não deve cadastrar com nome vazio', async ({ page }) => {
-  const landingPage = new LandingPage(page);
-
   await landingPage.visit();
   await landingPage.openLeadModal();
   await landingPage.submitLeadForm('', 'meu-email@gmail.com');
@@ -39,8 +38,6 @@ test('não deve cadastrar com nome vazio', async ({ page }) => {
 });
 
 test('não deve cadastrar com email vazio', async ({ page }) => {
-  const landingPage = new LandingPage(page);
-
   await landingPage.visit();
   await landingPage.openLeadModal();
   await landingPage.submitLeadForm(`meu nome`, '');
@@ -49,8 +46,6 @@ test('não deve cadastrar com email vazio', async ({ page }) => {
 });
 
 test('não deve cadastrar com e-mail incorreto', async ({ page }) => {
-  const landingPage = new LandingPage(page);
-
   await landingPage.visit();
   await landingPage.openLeadModal();
   await landingPage.submitLeadForm(`meu nome`, 'meu-email.gmail.com');
