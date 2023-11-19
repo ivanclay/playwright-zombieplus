@@ -1,5 +1,5 @@
 // @ts-check
-import { LandingPage } from './pages/landingPage';
+import { LandingPage } from '../pages/landingPage';
 const { test, expect } = require('@playwright/test');
 
 let landingPage;
