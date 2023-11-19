@@ -23,15 +23,31 @@ export class LoginPage {
         await expect(logoutLink).toBeVisible();
     }
 
-    /* ENVIAR NOTA PARA SUPORTE SOBRE TESTE FALHO */
+    /* Sending report about fail assert */
     async confirmIsLoggedInByRoute(){
         await this.page.waitForLoadState('networkidle');
-        await expect(this.page).toHaveURL(/.*admin/);
+        // await expect(this.page).toHaveURL(/.*admin/);
+        await expect(this.page).toHaveURL(/.*admin\/movies/);
     }
 
     // async confirmIsLoggedInByRoute(){
     //     await expect(this.page).toHaveURL('http://localhost:3000/admin/movies');
     // }
+
+    async alertEmailHaveText(text){
+        await expect(this.page.locator('.email-alert')).toHaveText(text);
+    }
+
+    async alertPasswordHaveText(text){
+        await expect(this.page.locator('.password-alert')).toHaveText(text);
+    }
+
+    //USE REGULAR EXPRESSION
+    async alertHaveText(text){
+        const alert = this.page.locator('span[class$=alert]');
+        await expect(alert).toHaveText(text);
+    }
+    
 
 
 }

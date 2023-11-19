@@ -1,11 +1,14 @@
 // @ts-check
-import { LandingPage } from '../pages/landingPage';
 const { test, expect } = require('@playwright/test');
+import { LandingPage } from '../pages/landingPage';
+import { Toast } from '../pages/Components';
 
 let landingPage;
+let toast;
 
 test.beforeEach( async ({ page }) => {
-   landingPage = new LandingPage(page);
+  landingPage = new LandingPage(page);
+    toast = new Toast(page);
 });
 
 test('deve cadastrar um lead na fila de espera', async ({ page }) => {
@@ -14,7 +17,7 @@ test('deve cadastrar um lead na fila de espera', async ({ page }) => {
   await landingPage.submitLeadForm(`meu nome`, 'meu-email@gmail.com');
 
   const toastMessage = `Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato!`;      
-  await landingPage.toastHaveText(toastMessage);
+  await toast.haveText(toastMessage);
 
 });
 
@@ -42,7 +45,7 @@ test('não deve cadastrar com email vazio', async ({ page }) => {
   await landingPage.openLeadModal();
   await landingPage.submitLeadForm(`meu nome`, '');
 
-      await landingPage.alertHaveText('Campo obrigatório');
+  await landingPage.alertHaveText('Campo obrigatório');
 });
 
 test('não deve cadastrar com e-mail incorreto', async ({ page }) => {
